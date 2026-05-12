@@ -1,13 +1,15 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+
 <meta charset="UTF-8">
 <title>Redirect</title>
+
+<link rel="preconnect" href="https://drive.google.com">
+<link rel="dns-prefetch" href="//drive.google.com">
+
 </head>
 <body>
-
-<p>移動中...</p>
 
 <script>
 
@@ -39,7 +41,6 @@ const files = {
 
   "URL5_Youtube":
     "https://youtube.com/channel/UC9QhY2jtffByLSzBjnrHzig?feature=shared"
-
 };
 
 const params =
@@ -58,20 +59,19 @@ if (!url) {
 
 } else {
 
-  fetch(GAS_URL, {
-    method: "POST",
-    body: JSON.stringify({
+  // 超軽量バックグラウンド送信
+  navigator.sendBeacon(
+    GAS_URL,
+    JSON.stringify({
       fileId,
       url,
-      userAgent: navigator.userAgent
+      userAgent: navigator.userAgent,
+      time: Date.now()
     })
-  })
-  .finally(() => {
+  );
 
-    location.href = url;
-
-  });
-
+  // 即移動
+  location.replace(url);
 }
 
 </script>
