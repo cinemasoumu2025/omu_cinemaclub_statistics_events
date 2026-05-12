@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Redirect</title>
+</head>
+<body>
+
+<p>移動中...</p>
+
+<script>
+
+const GAS_URL =
+  "https://script.google.com/macros/s/AKfycbz8d6wEZBrI4jajB-mZzBhgdMyEulp_0Q_1BebKDIZIwjMuDzKgtGdbSKMOEc8jfAxO/exec";
+
+const files = {
+
+  pdf1A(P_GD_advance):
+    "https://drive.google.com/file/d/1lTWjEBX-wsglTdlIA4UleFM2Ty2DLTaO/view?usp=drive_link",
+
+  pdf1B(P_GD_Today):
+    "https://drive.google.com/file/d/1lTWjEBX-wsglTdlIA4UleFM2Ty2DLTaO/view?usp=drive_link",
+
+  URL1(HP):
+    "https://omucinemaclub.sakura.ne.jp/OMU_CINEMA_CLUB/html/",  
+  
+  URL2(X):
+    "https://twitter.com/omu_cinemaclub",
+
+  URL3(Instagram):
+   "https://www.instagram.com/cinema.club.omu/",
+
+  URL4A(P_FL_advance):
+    "https://online.fliphtml5.com/flszc/ooaq/",  
+  
+  URL4B(P_FL_Today):
+    "https://online.fliphtml5.com/flszc/ooaq/",
+
+  URL5(Youtube):
+   "https://youtube.com/channel/UC9QhY2jtffByLSzBjnrHzig?feature=shared",
+    
+};
+
+const params =
+  new URLSearchParams(location.search);
+
+const fileId =
+  params.get("id");
+
+const url =
+  files[fileId];
+
+if (!url) {
+  document.body.innerHTML =
+    "ファイルが存在しません";
+} else {
+
+  fetch(GAS_URL, {
+    method: "POST",
+    body: JSON.stringify({
+      fileId,
+      url,
+      userAgent: navigator.userAgent
+    })
+  })
+  .finally(() => {
+    location.href = url;
+  });
+}
+
+</script>
+
+</body>
+</html>
